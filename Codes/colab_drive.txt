@@ -1,0 +1,23 @@
+# Code to read csv file into Colaboratory:
+# !pip install -U -q PyDrive
+
+from pydrive.auth import GoogleAuth
+from pydrive.drive import GoogleDrive
+from google.colab import auth
+from oauth2client.client import GoogleCredentials
+
+# Authenticate and create the PyDrive client.
+auth.authenticate_user()
+gauth = GoogleAuth()
+gauth.credentials = GoogleCredentials.get_application_default()
+drive = GoogleDrive(gauth)
+#You will get a link from which you will obtain a verification code, enter that verification code in the provided slot.
+
+
+link = '<Insert drive link of CSV>'
+
+fluff, id = link.split('=')
+downloaded = drive.CreateFile({'id':id}) 
+downloaded.GetContentFile('Filename.csv')
+  
+data = pd.read_csv('Filename.csv')
